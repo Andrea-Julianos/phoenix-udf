@@ -2,6 +2,7 @@ package com.zhibei.phoenixudf;
 
 import org.apache.phoenix.expression.Expression;
 import org.apache.phoenix.expression.LiteralExpression;
+
 import org.apache.phoenix.expression.function.DateScalarFunction;
 import org.apache.phoenix.expression.function.ScalarFunction;
 import org.apache.phoenix.parse.CurrentDateParseNode;
@@ -12,6 +13,13 @@ import org.apache.phoenix.schema.types.PDate;
 import org.apache.phoenix.schema.types.PTimestamp;
 import org.apache.phoenix.schema.types.PVarchar;
 import org.joda.time.DateTime;
+import com.google.common.cache.Cache;
+import com.google.common.cache.RemovalListener;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.cache.Weigher;
+
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,7 +31,9 @@ import java.util.List;
  *
  */
 @FunctionParseNode.BuiltInFunction(
+        /*函数名*/
         name = "QUARTER",
+        /*参数名*/
         args = {@FunctionParseNode.Argument(
                 allowedTypes = {PTimestamp.class}
         )}
